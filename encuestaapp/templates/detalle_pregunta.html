@@ -10,7 +10,6 @@
       <dl class="dl-horizontal">
  
         <dt>Codigo: </dt>
-         <dd>{{pregunta.id }}</dd>
  
           <dt>Nombre: </dt>
          <dd>{{ pregunta.titulo }}</dd> 
@@ -40,7 +39,6 @@
              {% for re in respuestas %}
              <tr> 
   
-                   <td>{{re.id}}</td> 
                    <td>{{re.titulo}}</td>
                    <td>{{re.votosRespuesta}}</td>
                    <td><a href="{% url 'respuesta-update' encuesta.id  pregunta.id  re.id %}" class="btn btn-default btn-xs">Editar</a></td>
