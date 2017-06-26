@@ -163,19 +163,20 @@ def Votar(request, encuestaid):
         else:
             return HttpResponseRedirect(reverse('error', args=(encuesta.id,)))
 
-
-
-
-
-           
-
 def GraciasView(request, encuestaid):
     e=get_object_or_404(Encuesta, id= encuestaid)
     return render(request, 'gracias.html',{'encuesta':e} )
 
 def ErrorView(request, encuestaid):
     e=get_object_or_404(Encuesta, id= encuestaid)
-    return render(request, 'error.html',{'encuesta':e, 'error_message':"Solo puedes votar una vez una encuesta"} )
+    return render(request, 'error.html',{'encuesta':e, 'error_message':"No puedes contestar mas de una vez la misma encuesta"} )
+
+
+def ResultadoView(request,encuestaid):
+    e=get_object_or_404(Encuesta, id=encuestaid)
+    preguntas= get_list_or_404(Pregunta, encuesta=e)
+    return render(request, 'resultados.html',{'encuesta':e, 'preguntas':preguntas} )
+
 
 
 

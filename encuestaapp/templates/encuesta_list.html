@@ -19,6 +19,7 @@
    <hr />   
    <a href="{% url 'encuesta-new' %} " class="btn btn-success" >
    <span class="glyphicon glyphicon-plus"></span>Nueva Encuesta</a>
+   <br>
    <div class="table-responsive">
        <table class="table table-hover">
            <tr class="success"> 
@@ -27,6 +28,7 @@
                <th>Descripcion</th>
                <th>Visitas</th>
                <th>Fecha de Creacion</th>
+               <th></th>
                <th></th>
                <th></th>
                <th></th>
@@ -40,13 +42,14 @@
                  <td>{{ encuesta.descripcion}}</td>
                  <td>{{ encuesta.visitas}}</td>
                  <td>{{ encuesta.fechaCreacion}}</td>
-                 <td><a href="{{ encuesta.get_absolute_url }}" class="btn btn-default btn-xs">Ver detalle
+                 <td><a href="{{ encuesta.get_absolute_url }}" class="btn btn-default btn-xs">Ver preguntas y detalle
                      </a>
                   </td>
                   <td><a href="{% url 'responder' encuesta.id %}" class="btn btn-default btn-xs">Responder</a></td>
                   
                   <td><a href="{% url 'encuesta-delete' pk=encuesta.id %}"class="btn btn-default btn-xs">Eliminar</a></td>
                   <td><a href="{% url 'encuesta-edit' pk=encuesta.id %}" class="btn btn-default btn-xs">Editar</a></td>
+                  <td><a href="{% url 'resultado' encuesta.id %}" class="btn btn-default btn-xs">Resultados</a></td>
 
  
 

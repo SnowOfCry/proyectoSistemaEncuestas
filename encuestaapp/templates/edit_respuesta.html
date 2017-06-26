@@ -18,7 +18,8 @@
 
       <label for="titulo">Titulo</label> 
 			<input type="text" name="titulo", value="{{respuesta.titulo}}">
-
+        <br>
+        <br>
         <div class="col-md-offset-2 col-md-7">
                <button id="save_pregunnta" type="submit" class="btn btn-success">Guardar</button>
                <a href="{% url 'detalle-pregunta' encuesta.id pregunta.id %}" class="btn btn-default">Volver al detalle</a>

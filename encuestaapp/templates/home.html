@@ -1,4 +1,8 @@
 {% extends 'shared.html'%}
+
+
+
+
 {% block titulo %}
 	Inicio
 {% endblock titulo %}
@@ -14,6 +18,19 @@
 </nav>
 {% endblock menu %}
 
-{% block content %}
-	
-{% endblock content %}
+
+
+
+
+</head>
+
+ <div class="col-md-12" > 
+            {% block content %}
+               <h2>Bienvenido al sistema de encuestas</h4> 
+               <h3>Para acceder debes tener una cuenta</h3>
+               <h4>En caso de no tenerla, contacta con el administrador</h2>
+            {% endblock %}
+ </div>
+ <br>
+ <br>
+ <br>
