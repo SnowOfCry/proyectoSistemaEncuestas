@@ -1,0 +1,73 @@
+{% extends "shared.html" %}
+
+{% block titulo%}
+
+{% endblock %}
+
+{% block content %}
+<h3>Detalle {{ encuesta }}</h3> 
+<hr/>
+      <dl class="dl-horizontal">
+ 
+        <dt>Codigo: </dt>
+         <dd>{{encuesta.id }}</dd>
+ 
+          <dt>Nombre: </dt>
+         <dd>{{ encuesta.nombreEncuesta }}</dd> 
+
+          <dt>Descripcion: </dt> 
+         <dd>{{encuesta.descripcion}}</dd>
+ 
+         <dt>Visitas: </dt>
+         <dd>{{encuesta.visitas}}</dd>
+
+         <dt>Fecha Creacion: </dt>
+         <dd>{{encuesta.fechaCreacion}}</dd>
+
+
+      </dl>
+	
+	  <hr />
+    <h3>Mis Preguntas</h3>
+  
+   <hr />   
+    <a href="{% url 'pregunta-new' encuesta.id %} " class="btn btn-success" >
+    <span class="glyphicon glyphicon-plus"></span>Nueva Pregunta</a>
+
+      <div class="table-responsive">
+       <table class="table table-hover">
+           <tr class="success"> 
+   
+               <th>Codigo</th> 
+               <th>titulo</th>
+               <th></th>
+               <th></th>
+               <th></th>
+               
+           </tr>
+
+             {% for pr in lista_preguntas %}
+             <tr> 
+  				     {% if pr.encuesta_id == encuesta.id%}
+
+  				        
+                   <td>{{pr.id}}</td> 
+                   <td>{{pr.titulo}}</td>
+                   <td><a href="{% url 'detalle-pregunta' encuesta.id pr.id %}" class="btn btn-default btn-xs">Ver Detalle</a></td>
+                   <td><a href="{% url 'pregunta-delete' encuesta.id pr.id %}"class="btn btn-default btn-xs">Eliminar</a></td>
+                   <td><a href="{% url 'pregunta-edit' encuesta.id pr.id %}" class="btn btn-default btn-xs">Editar</a></td>
+                   
+
+              {% endif %}
+                 
+             
+              {% endfor %}
+            </tr> 
+       </table>
+     
+   </div> 
+
+
+   <a href="{% url 'encuesta-list' %}" class="btn btn-default">Vover a la lista</a>
+   {% endblock %}
+

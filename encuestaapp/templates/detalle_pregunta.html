@@ -1,0 +1,58 @@
+{% extends "shared.html" %}
+
+{% block titulo%}
+
+{% endblock %}
+
+{% block content %}
+<h3>Detalle {{ pregunta.titulo }}</h3> 
+<hr/>
+      <dl class="dl-horizontal">
+ 
+        <dt>Codigo: </dt>
+         <dd>{{pregunta.id }}</dd>
+ 
+          <dt>Nombre: </dt>
+         <dd>{{ pregunta.titulo }}</dd> 
+
+      </dl>
+	
+	  <hr />
+    <h3>Mis Respuestas</h3>
+  
+   <hr />   
+    <a href="{% url 'respuesta-new' encuesta.id pregunta.id %} " class="btn btn-success" >
+    <span class="glyphicon glyphicon-plus"></span>Nueva Respuesta</a>
+
+      <div class="table-responsive">
+       <table class="table table-hover">
+           <tr class="success"> 
+   
+               <th>Codigo</th> 
+               <th>titulo</th>
+               <th>Votos</th>
+               <th></th>
+               <th></th>
+               
+               
+           </tr>
+
+             {% for re in respuestas %}
+             <tr> 
+  
+                   <td>{{re.id}}</td> 
+                   <td>{{re.titulo}}</td>
+                   <td>{{re.votosRespuesta}}</td>
+                   <td><a href="{% url 'respuesta-update' encuesta.id  pregunta.id  re.id %}" class="btn btn-default btn-xs">Editar</a></td>
+                   <td><a href="{% url 'respuesta-delete' encuesta.id  pregunta.id  re.id %}" class="btn btn-default btn-xs">Eliminar</a></td>
+                       
+             
+              {% endfor %}
+            </tr> 
+       </table>
+     
+   </div> 
+
+
+   <a href="{% url 'encuesta-view' pk=encuesta.id %}" class="btn btn-default">Vover a la lista</a>
+   {% endblock %}

@@ -1,0 +1,30 @@
+{% extends "shared.html" %}
+
+	{% block titulo%}
+  Nueva Pregunta
+	{%endblock%}
+	
+  {% block Margen %} 
+   
+   <h3>Administacion de Encuestas</h3>
+
+  {% endblock %}
+
+	{% block content %}
+   <h3>Nueva pregunta para la encuesta: {{id.nombreEncuesta}}</h3>
+   <hr/>
+   <form action="{% url 'pregunta-new' id.id %}" class="form-horizontal" method="post">
+       {% csrf_token %}
+
+      <label for="titulo">Titulo</label> 
+			<input type="text" name="titulo">
+
+        <div class="col-md-offset-2 col-md-7">
+               <button id="save_pregunnta" type="submit" class="btn btn-default">Guardar</button>
+               <a href="{% url 'encuesta-view' id.id %}" class="btn btn-default">Volver al detalle</a>
+        </div>
+               
+    </form>
+
+
+{%endblock%}

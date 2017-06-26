@@ -1,0 +1,28 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Sistema de encuestas{% endblock %}</title>
+</head>
+<body>
+  <header>
+    <h1>Sistema de encuestas</h1>
+    {% if user.is_authenticated %}
+      Hi {{ user.username }}!
+      <nav><a href="{% url 'logout' %}">logout</a></nav>
+    {% else %}
+      <nav><a href="{% url 'login' %}">login</a></nav>
+    {% endif %}
+  </header>
+  <hr>
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+  <hr>
+  <footer>
+    <b>Grupo Teorico 1- Grupo15</b>
+  </footer>
+</body>
+</html>

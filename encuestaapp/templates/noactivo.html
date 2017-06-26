@@ -1,0 +1,52 @@
+{%extends 'shared.html'%}
+{% load staticfiles %}
+{% block Titulo %}
+	Ingresar
+{% endblock Titulo %}
+{% block Margen %}
+{% endblock Margen %}
+
+{% block content %}
+<h2>Acceder</h2>
+
+<style>
+input[type=text], input[type=password] {
+    width: 110%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+button {
+    background-color: #808080;
+    color: white;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 40%;
+}
+</style>
+<body>
+
+<form id='formulario' method='post' action=''>
+{% csrf_token %}
+        <table>{{formulario}}</table>
+        <button type='submit' value='Ingresar'> Ingresar </button>
+    </form>
+{% endblock content %}
+
+
+{% block menu %}
+<nav class="navbar navbar-inverse navbar-static-top navbarheader-background" role="navigation">
+  <div class="container">
+      
+    </div> 
+</nav>
+
+{% endblock menu %}
+
+
+
+

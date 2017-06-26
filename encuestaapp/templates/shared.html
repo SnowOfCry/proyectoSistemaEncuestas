@@ -1,0 +1,98 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8"> 
+ 
+
+    <meta name="viewport" content="width=device-width,user-acalable=no, 
+    inicial-scale=1.0, maximun-scale=1.0,minimunscale=1.0"/>
+
+
+   <title>{% block titulo %}Control de encuestas {% endblock titulo%}</title>
+  
+  <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}"></link>
+  <link rel="stylesheet" type="text/css" href="{% static "css/mi_estilo.css" %}"></link>
+  <scriptsrc= "{% static "js/jquery-3.2.1.min.js"}"></script>
+  <scriptsrc= "{% static "js/bootstrap.min.js"}"></script>
+
+
+</head>
+
+<body>
+ <!-- Aca se define el header de nuestro sitio con el bloque menu
+-->
+{% block menu %} 
+  <header>
+          <nav class="navbar navbar-inverse navbar-static-top navbarheader-background" role="navigation">
+          <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#miNavegacion">
+                            <span class="sr-only">Desplegar/ocultar</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                    </button>
+                    <a href="{% url 'encuesta-list' %}" class="navbar-brand">Control de Encuestas</a>
+                </div>
+          
+    </div>
+     </nav>
+   </header>
+{% endblock %}
+
+ <!-- aca se define el titulo de nuestra pagina --> 
+ <div class="jumbotron">
+
+  {% block Margen %} 
+      <h3>Sistema de Encuestas</h3>
+    
+  {% endblock %}
+  
+  </div>
+
+  <div class="container">
+    
+    <div class="row">
+        <section class="col-md-9"> 
+            {% block content %}
+               <h4>Este es elcontenido principal del sitio</h4> 
+            {% endblock %}
+        </section>
+  <hr />
+  
+  <footer>
+     <div class="container">
+       <div class="row">
+            {% block footer %} 
+                  <div class="col-xs-6">
+                    <p>Grupo 15- GT01</p>
+                  </div>
+                  <div class="col-xs-6">
+                     <ul class="list-inline text-right">
+                       <li><a href="/inicio">Home</a></li>
+                       
+                     </ul>
+                  </div> 
+            {% endblock %}
+      </div> 
+    </div>
+   </footer>
+
+
+</body>
+</html>
+
+
+
+           
+
+
+
+
+
+
+
+
+

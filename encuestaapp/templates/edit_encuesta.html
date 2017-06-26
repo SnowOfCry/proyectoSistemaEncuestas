@@ -1,0 +1,58 @@
+{% extends "shared.html" %}
+
+	{% block titulo%}
+  Encuesta
+	{%endblock%}
+	
+  {% block Margen %} 
+   
+   <h3>Administacion de Encuestas</h3>
+
+  {% endblock %}
+
+	{% block content %}
+  {% if encuesta.id %} 
+  <h3>Editar Encuesta</h3>
+  {% else %} 
+  <h3>Nuevo Encuesta</h3>
+  {% endif %} 
+   <hr/>
+   <form action="{{action}}" class="form-horizontal" method="post"> 
+       {% csrf_token %}
+
+       {%for element in form %} 
+			<div class="form-group">
+               <label class="col-md-2 controllabel">
+               	
+               	{{element.label}}
+               
+               </label>
+
+               <div class="col-md-7">
+
+					           {{element}}
+                     <div class="error">{{element.errors}}</div>
+
+					
+               </div> 
+            </div>
+        {% endfor %} 
+
+        <div class="col-md-offset-2 col-md-7">
+               <button id="save_encuesta" type="submit" class="btn btndefault">Guardar</button>
+               <a href="{% url 'encuesta-list' %}" class="btn btndefault">Volver a la lista</a>
+        </div>
+               
+    </form>
+
+
+{%endblock%}
+
+
+
+
+
+
+
+
+

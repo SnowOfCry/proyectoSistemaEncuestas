@@ -1,0 +1,41 @@
+{% extends "shared.html" %}
+
+<style>
+	body { margin-top:20px; }
+.panel-body:not(.two-col) { padding:0px }
+.glyphicon { margin-right:5px; }
+.glyphicon-new-window { margin-left:5px; }
+.panel-body .radio,.panel-body .checkbox {margin-top: 0px;margin-bottom: 0px;}
+.panel-body .list-group {margin-bottom: 0;}
+.margin-bottom-none { margin-bottom: 0; }
+.panel-body .radio label,.panel-body .checkbox label { display:block; }
+</style>
+
+
+{% block Margen %} 
+
+    <h3>{{encuesta.nombreEncuesta}}</h3>
+
+{% endblock %}
+
+{% block content%}
+	
+	<form action="{% url 'votar' encuesta.id %}" method="post"> 
+		{% csrf_token %}
+
+		{%for pre in preguntas%}
+			<h1>{{ pre.titulo }}</h1>
+			{%	 for respuesta in pre.respuesta_set.all %} 
+			 <div class="checkbox">
+				<input type="radio" name="respuesta{{ pre.id}}" id="respuesta{{forloop.counter }}" value="{{ respuesta.id }}" />
+				<label for="respuesta{{ forloop.counter }}"> {{respuesta.titulo }}</label><br /> 
+			</div>
+			{%	 endfor %}
+		{%	 endfor %}
+			<input type="submit" value="Votar" />
+	</form>
+ 
+
+
+{% endblock %}
+

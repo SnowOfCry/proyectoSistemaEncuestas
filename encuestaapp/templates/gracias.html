@@ -1,0 +1,23 @@
+{% extends "shared.html" %}
+
+	{% block titulo%}
+  Gracias
+	{%endblock%}
+	
+ {% block Margen %} 
+   
+   <h3>Muchas gracias, tus datos han sido enviados</h3>
+
+  {% endblock %}
+
+
+
+  {% block content %}
+	<h3>Gracias por llenar la encuesta: {{encuesta.nombreEncuesta}}</h3>
+	<br>
+	<h3>La ip con la que hiciste tu encuesta fue: {{respue.ip}}</h3>
+	<br>
+	<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:8000{% url 'responder' encuesta.id %}" class="btn btn-blue">Compartir en fb</a>
+
+  {% endblock %}
+

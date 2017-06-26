@@ -1,0 +1,29 @@
+{% extends "shared.html" %}
+
+	{% block titulo%}
+  Eliminar pregunta
+	{%endblock%}
+	
+  {% block Margen %} 
+   
+   <h3>Administacion de Encuestas</h3>
+
+  {% endblock %}
+
+	{% block content %}
+   <h3>Eliminar: {{pregunta.titulo}}</h3>
+   <hr/>
+   <form action="{% url 'pregunta-delete' encuesta.id pregunta.id %}" class="form-horizontal" method="post">
+       {% csrf_token %}
+
+        <h3>Desea Eliminar La pregunta: {{pregunta.titulo}}</h3>
+
+        <div class="col-md-offset-2 col-md-7">
+               <button id="save_pregunnta" type="submit" class="btn btn-danger">Si eliminar</button>
+               <a href="{% url 'encuesta-view' encuesta.id %}" class="btn btn-default">Volver al detalle</a>
+        </div>
+               
+    </form>
+
+
+{%endblock%}
