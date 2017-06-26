@@ -111,20 +111,30 @@ def ResponderEncuesta(request, encuestaid):
 
 def Votar(request, encuestaid):
     e=get_object_or_404(Encuesta, id= encuestaid)
-    if request.method == 'POST':
-        ip_user= get_ip(request)
-        encResp= EncuestaRespondida(encuesta=e, ip=ip_user)
-        encResp.save()
-        p=get_list_or_404(Pregunta, encuesta = e)
+    
+    ip_user= get_ip(request)
+    encIPR= get_list_or_404(EncuestaRespondida, encuesta = e)
+    valido=True
 
-        for el in p:
-            opcion_elegida=request.POST.get('respuesta'+str(el.id))
-            if opcion_elegida != '' :
-                respuesta=get_object_or_404(Respuesta, id= opcion_elegida)
-                respuesta.votosRespuesta +=1
-                respuesta.save()
+    for enip in encIPR:
+        if ip_user = enip.ip:
+            valido= False
 
-    return HttpResponseRedirect(reverse('gracias', args=(e.id,)))
+    if valido == True:
+        if request.method == 'POST':
+            e.visitas += 1
+            p=get_list_or_404(Pregunta, encuesta = e)
+            for el in p:
+                opcion_elegida=request.POST.get('respuesta'+str(el.id))
+                if opcion_elegida != '' :
+                    respuesta=get_object_or_404(Respuesta, id= opcion_elegida)
+                    respuesta.votosRespuesta +=1
+                    respuesta.save()
+                    return HttpResponseRedirect(reverse('gracias', args=(e.id,)))
+    else:
+        return render(request, 'gracias.html',{'encuesta':e, 'respue':ere, 'error_message': "Ya has contestado esta encuesta."} )
+
+
 
            
 
