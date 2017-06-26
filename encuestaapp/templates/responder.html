@@ -27,7 +27,7 @@
 			<h1>{{ pre.titulo }}</h1>
 			{%	 for respuesta in pre.respuesta_set.all %} 
 			 <div class="checkbox">
-				<input type="radio" name="respuesta{{ pre.id}}" id="respuesta{{forloop.counter }}" value="{{ respuesta.id }}" />
+				<input type="radio" name="pp{{ pre.id}}" id="respuesta{{forloop.counter }}" value="{{ respuesta.id }}" />
 				<label for="respuesta{{ forloop.counter }}"> {{respuesta.titulo }}</label><br /> 
 			</div>
 			{%	 endfor %}

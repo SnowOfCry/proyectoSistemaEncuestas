@@ -110,38 +110,36 @@ def ResponderEncuesta(request, encuestaid):
     return render(request, 'responder.html',{'encuesta':encuesta , 'preguntas':preguntas} )
 
 def Votar(request, encuestaid):
-    e=get_object_or_404(Encuesta, id= encuestaid)
-    
+    encuesta=get_object_or_404(Encuesta, id= encuestaid)
     ip_user= get_ip(request)
-    encIPR= get_list_or_404(EncuestaRespondida, encuesta = e)
-    valido=True
-
-    for enip in encIPR:
-        if ip_user = enip.ip:
-            valido= False
-
-    if valido == True:
+    if 44>1:
+        preguntas=get_list_or_404(Pregunta, encuesta=encuesta)
+    
         if request.method == 'POST':
-            e.visitas += 1
-            p=get_list_or_404(Pregunta, encuesta = e)
-            for el in p:
-                opcion_elegida=request.POST.get('respuesta'+str(el.id))
-                if opcion_elegida != '' :
-                    respuesta=get_object_or_404(Respuesta, id= opcion_elegida)
+            for pregunta in preguntas:
+                if pregunta.id == 1:
+                    listado = []
+                    listado.append(int(request.POST.get('pp'+str(pregunta.id))))
+                else:
+                    listado= request.POST.getlist('pp'+str(pregunta.id))
+                for elemento in listado:
+                    respuesta= Respuesta.objects.get(id= elemento)
                     respuesta.votosRespuesta +=1
                     respuesta.save()
-                    return HttpResponseRedirect(reverse('gracias', args=(e.id,)))
-    else:
-        return render(request, 'gracias.html',{'encuesta':e, 'respue':ere, 'error_message': "Ya has contestado esta encuesta."} )
 
-
+            encuesta.visitas +=1
+            encuesta.save()
+            return HttpResponseRedirect(reverse('gracias', args=(encuesta.id,)))
 
            
 
 def GraciasView(request, encuestaid):
     e=get_object_or_404(Encuesta, id= encuestaid)
-    ere=get_object_or_404(EncuestaRespondida, id= encuestaid)
-    return render(request, 'gracias.html',{'encuesta':e, 'respue':ere} )
+    return render(request, 'gracias.html',{'encuesta':e} )
+
+def ErrorView(request, encuestaid):
+    e=get_object_or_404(Encuesta, id= encuestaid)
+    return render(request, 'error.html',{'encuesta':e, 'error_message':"Solo puedes votar una vez una encuesta"} )
 
 
 

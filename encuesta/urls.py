@@ -17,7 +17,7 @@ Including another URLconf
 
 
 from encuestaapp.views import ListEncuestaView, DeleteEncuesta, CreateEncuestaView, CreatePregunta, Votar, inicio, ingresar, cerrar, DetailEncuesta, ResponderEncuesta, UpdateEncuestaView
-from encuestaapp.views import DetailPregunta, Deletepregunta, UpdatePregunta, CreateRespuesta, UpdateRespuesta, Deleterespuesta,GraciasView
+from encuestaapp.views import DetailPregunta, Deletepregunta, UpdatePregunta, CreateRespuesta, UpdateRespuesta, Deleterespuesta,GraciasView,ErrorView
 from django.conf.urls import url, include
 from django.contrib.auth.decorators import login_required
 from django.contrib import admin
@@ -43,4 +43,5 @@ urlpatterns = [
     url(r'^Encuesta/(?P<encuestaid>\d+)/Pregunta/(?P<preguntaid>\d+)/EditRespuesta/(?P<respuestaid>\d+)/$',login_required(UpdateRespuesta), name="respuesta-update"),
     url(r'^Encuesta/(?P<encuestaid>\d+)/Pregunta/(?P<preguntaid>\d+)/DeleteRespuesta/(?P<respuestaid>\d+)/$',login_required(Deleterespuesta), name="respuesta-delete"),
     url(r'^Gracias/(?P<encuestaid>\d+)/$', GraciasView, name='gracias'),
+    url(r'^Error/(?P<encuestaid>\d+)/$', ErrorView, name='error'),
     ]
