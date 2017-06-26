@@ -25,10 +25,10 @@ Resultados
 	
 	<div name="resultado">
 		{%for pre in preguntas%}
-			<h3>{{forloop.counter }}. {{ pre.titulo }}</h1><br>
+			<b> <h3>{{forloop.counter }}. {{ pre.titulo }}</h3> </b><br>
 			{%	 for respuesta in pre.respuesta_set.all %} 
 			 <div >
-				 <h4>{{forloop.counter }}. {{respuesta.titulo }} ------ Votos:{{respuesta.votosRespuesta}}</label></h4><br>
+				 <h5>{{forloop.counter }}.  {{respuesta.titulo }} ------ Votos:{{respuesta.votosRespuesta}}</label></h5><br>
 			</div>
 			{%	 endfor %}
 			<br>

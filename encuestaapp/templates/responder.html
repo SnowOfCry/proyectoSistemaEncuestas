@@ -24,7 +24,7 @@
 		{% csrf_token %}
 
 		{%for pre in preguntas%}
-			<h3>{{forloop.counter }}. {{ pre.titulo }}</h1>
+			<b><h3>{{forloop.counter }}. {{ pre.titulo }}</h3></b>
 			{%	 for respuesta in pre.respuesta_set.all %} 
 			 <div class="checkbox">
 				<input type="radio" name="pp{{ pre.id}}" id="respuesta{{forloop.counter }}" value="{{ respuesta.id }}" />
@@ -35,8 +35,9 @@
 			<br>
 			<br>
 			 <button  type="submit" class="btn btn-success btn-right">Votar</button>
+			 <a href="{% url 'resultado' encuesta.id %}" class="btn btn-default">Resultados</a>
 	</form>
- 
+ 			
 
 
 {% endblock %}
