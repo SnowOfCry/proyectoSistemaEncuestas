@@ -28,12 +28,7 @@
           <nav class="navbar navbar-inverse navbar-static-top navbarheader-background" role="navigation">
           <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#miNavegacion">
-                            <span class="sr-only">Desplegar/ocultar</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                    </button>
+                
                     <a href="{% url 'encuesta-list' %}" class="navbar-brand">Control de Encuestas</a>
                 </div>
           
@@ -51,18 +46,31 @@
   {% endblock %}
   
   </div>
-
+<section>
   <div class="container">
     
     <div class="row">
-        <section class="col-md-9"> 
+        <section class="col-md-12"> 
             {% block content %}
                <h4>Este es elcontenido principal del sitio</h4> 
             {% endblock %}
         </section>
-  <hr />
-  
-  
+    </div>
+  </div>
+</section>
+ <hr>
+ <br>
+  <footer>
+    <div class="container">
+      <div class="row">
+          <div class="col.xs-6">
+            <p>Grupo 15 GT01</p>
+          </div>
+      </div>
+
+    </div>
+    
+  </footer>
 
 
 </body>
