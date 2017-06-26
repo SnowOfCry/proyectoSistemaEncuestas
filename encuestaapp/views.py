@@ -61,7 +61,7 @@ class CreateEncuestaView(CreateView):
     form_class = EncuestaForm
 
     def get_context_data(self, **kwargs): 
-       context=super(CreateArticuloView,self).get_context_data(**kwargs) 
+       context=super(CreateEncuestaView,self).get_context_data(**kwargs) 
        context['action']=reverse('encuesta-new')
        return context
 
