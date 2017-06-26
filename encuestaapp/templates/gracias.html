@@ -13,7 +13,7 @@
 
 
 	  {% block content %}
-		<h3>Gracias por llenar la encuesta: {{encuesta.nombreEncuesta}}</h3>
+		<h3>Gracias por Completar la encuesta: {{encuesta.nombreEncuesta}}</h3>
 		<br>
 		<a href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:8000{% url 'responder' encuesta.id %}" class="btn btn-default">Compartir en fb</a>
 		<a href="{% url 'resultado' encuesta.id %}" class="btn btn-default">Resultados</a>
