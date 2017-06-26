@@ -103,7 +103,7 @@ class UpdateEncuestaView(UpdateView):
 
 #-----------------------Tratamiento de Contestar una encuesta--------------------------------
 
-#En estas 2 funciones se muestran y guardan los votos de cada encuesta
+#En estas 4 funciones se muestran y guardan los votos de cada encuesta
 def ResponderEncuesta(request, encuestaid):
     encuesta= get_object_or_404(Encuesta, id= encuestaid)
     preguntas= get_list_or_404(Pregunta, encuesta_id = encuestaid)
@@ -112,24 +112,60 @@ def ResponderEncuesta(request, encuestaid):
 def Votar(request, encuestaid):
     encuesta=get_object_or_404(Encuesta, id= encuestaid)
     ip_user= get_ip(request)
-    if 44>1:
-        preguntas=get_list_or_404(Pregunta, encuesta=encuesta)
     
-        if request.method == 'POST':
-            for pregunta in preguntas:
-                if pregunta.id == 1:
-                    listado = []
-                    listado.append(int(request.POST.get('pp'+str(pregunta.id))))
-                else:
-                    listado= request.POST.getlist('pp'+str(pregunta.id))
-                for elemento in listado:
-                    respuesta= Respuesta.objects.get(id= elemento)
-                    respuesta.votosRespuesta +=1
-                    respuesta.save()
+    if encuesta.visitas == 0:
+        valido=True
+        preguntas=get_list_or_404(Pregunta, encuesta=encuesta)
+        if valido == True:
+            encuRespo=EncuestaRespondida(encuesta=encuesta, ip=ip_user)
+            encuRespo.save()
+            if request.method == 'POST':
+                for pregunta in preguntas:
+                    if pregunta.id == 1:
+                        listado = []
+                        listado.append(int(request.POST.get('pp'+str(pregunta.id))))
+                    else:
+                        listado= request.POST.getlist('pp'+str(pregunta.id))
+                    for elemento in listado:
+                        respuesta= Respuesta.objects.get(id= elemento)
+                        respuesta.votosRespuesta +=1
+                        respuesta.save()
 
             encuesta.visitas +=1
             encuesta.save()
             return HttpResponseRedirect(reverse('gracias', args=(encuesta.id,)))
+    else:
+        valido=True
+        enRe= get_list_or_404(EncuestaRespondida, encuesta_id = encuesta.id)
+        for comp in enRe:
+            if ip_user == comp.ip:
+                valido=False
+
+        if valido == True:
+            encuRespo=EncuestaRespondida(encuesta=encuesta, ip=ip_user)
+            encuRespo.save()
+            if request.method == 'POST':
+                for pregunta in preguntas:
+                    if pregunta.id == 1:
+                        listado = []
+                        listado.append(int(request.POST.get('pp'+str(pregunta.id))))
+                    else:
+                        listado= request.POST.getlist('pp'+str(pregunta.id))
+                    for elemento in listado:
+                        respuesta= Respuesta.objects.get(id= elemento)
+                        respuesta.votosRespuesta +=1
+                        respuesta.save()
+
+            encuesta.visitas +=1
+            encuesta.save()
+            return HttpResponseRedirect(reverse('gracias', args=(encuesta.id,)))
+
+        else:
+            return HttpResponseRedirect(reverse('error', args=(encuesta.id,)))
+
+
+
+
 
            
 
