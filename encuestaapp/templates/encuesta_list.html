@@ -33,6 +33,7 @@
                <th></th>
                <th></th>
                <th></th>
+               <th></th>
 
            </tr>
            {% for encuesta in object_list %}
@@ -50,6 +51,7 @@
                   <td><a href="{% url 'encuesta-delete' pk=encuesta.id %}"class="btn btn-default btn-xs">Eliminar</a></td>
                   <td><a href="{% url 'encuesta-edit' pk=encuesta.id %}" class="btn btn-default btn-xs">Editar</a></td>
                   <td><a href="{% url 'resultado' encuesta.id %}" class="btn btn-default btn-xs">Resultados</a></td>
+                  <td><a href="https://www.facebook.com/sharer/sharer.php?u=http://10.10.60.210:8000{% url 'responder' encuesta.id %}" class="btn btn-default btn-xs">Compartir en fb</a></td>
 
  
 
