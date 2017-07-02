@@ -1,8 +1,20 @@
 {% extends "shared.html" %}
 
+{% load staticfiles %}
+
 	{% block titulo%}
   		Gracias
 	{%endblock%}
+
+	<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v2.9";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));</script>
+
 
 	 {% block Margen %} 
 	   
@@ -15,7 +27,7 @@
 	  {% block content %}
 		<h3>Gracias por Completar la encuesta: {{encuesta.nombreEncuesta}}</h3>
 		<br>
-		<a href="https://www.facebook.com/sharer/sharer.php?u=http://10.10.60.210:8000{% url 'responder' encuesta.id %}" class="btn btn-default">Compartir en fb</a>
+		<div class="btn btn-default" data-href="http://10.10.60.210:8000/responder/{{encuesta.id}}" data-layout="box_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F10.10.60.210%3A8000%2Fresponder%2F{{encuesta.id}}&amp;src=sdkpreparse"><img src="{% static 'img/fb.ico' %}" alt="Compartir en fb">    Compartir en fb</a></div>
 		<a href="{% url 'resultado' encuesta.id %}" class="btn btn-default">Resultados</a>
 
 	  {% endblock %}
