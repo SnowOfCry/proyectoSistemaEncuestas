@@ -16,7 +16,7 @@ class Encuesta(models.Model):
         return reverse('encuesta-view', kwargs={'pk':self.id} )
 
 
-    def __str__(self):
+    def __unicode__(self):
         return self.nombreEncuesta
     
 
@@ -27,7 +27,7 @@ class Pregunta(models.Model):
     def get_absolute_url(self):
         return reverse('encuestaview',kwargs={'pk':self.encuesta})
 
-    def __str__(self):
+    def __unicode__(self):
         return self.titulo
 
 class Respuesta(models.Model):
@@ -38,7 +38,7 @@ class Respuesta(models.Model):
     def get_absolute_url(self):
         return reverse('preguntaview',kwargs={'pk':self.id})
     
-    def __str__(self):
+    def __unicode__(self):
         return self.titulo
 
 class EncuestaRespondida(models.Model):
