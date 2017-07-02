@@ -1,7 +1,13 @@
+import urllib
+import urllib2
+import json
+
+from django.conf import settings
+from django.contrib import messages
 
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, render_to_response, get_list_or_404
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response, get_list_or_404
 from encuestaapp.models import Encuesta, Pregunta, Respuesta, EncuestaRespondida
 from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
 from django.contrib.auth import authenticate, login, logout
@@ -116,23 +122,41 @@ def Votar(request, encuestaid):
     if encuesta.visitas == 0:
         valido=True
         preguntas=get_list_or_404(Pregunta, encuesta=encuesta)
+        
+
         if valido == True:
             encuRespo=EncuestaRespondida(encuesta=encuesta, ip=ip_user)
             encuRespo.save()
             if request.method == 'POST':
-                for pregunta in preguntas:
-                    if pregunta.id == 1:
-                        listado = []
-                        listado.append(int(request.POST.get('pp'+str(pregunta.id))))
-                    else:
-                        listado= request.POST.getlist('pp'+str(pregunta.id))
-                    for elemento in listado:
-                        respuesta= Respuesta.objects.get(id= elemento)
-                        respuesta.votosRespuesta +=1
-                        respuesta.save()
+                recaptcha_response = request.POST.get('g-recaptcha-response')
+                url = 'https://www.google.com/recaptcha/api/siteverify'
+                values = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': recaptcha_response
+                }
+                data = urllib.urlencode(values)
+                req = urllib2.Request(url, data)
+                response = urllib2.urlopen(req)
+                result = json.load(response)
 
-            encuesta.visitas +=1
-            encuesta.save()
+                if result['success']:
+                    encuesta.visitas +=1
+                    encuesta.save()
+                    for pregunta in preguntas:
+                        if pregunta.id == 1:
+                            listado = []
+                            listado.append(int(request.POST.get('pp'+str(pregunta.id))))
+                        else:
+                            listado= request.POST.getlist('pp'+str(pregunta.id))
+                        for elemento in listado:
+                            respuesta= Respuesta.objects.get(id= elemento)
+                            respuesta.votosRespuesta +=1
+                            respuesta.save()
+                else:
+                     messages.error(request, 'reCAPTCHA Invalido, Por favor ingresa de nuevo.')
+                     return redirect('responder', encuesta.id)
+
+            
             return HttpResponseRedirect(reverse('gracias', args=(encuesta.id,)))
     else:
         valido=True
@@ -145,19 +169,34 @@ def Votar(request, encuestaid):
             encuRespo=EncuestaRespondida(encuesta=encuesta, ip=ip_user)
             encuRespo.save()
             if request.method == 'POST':
-                for pregunta in preguntas:
-                    if pregunta.id == 1:
-                        listado = []
-                        listado.append(int(request.POST.get('pp'+str(pregunta.id))))
-                    else:
-                        listado= request.POST.getlist('pp'+str(pregunta.id))
-                    for elemento in listado:
-                        respuesta= Respuesta.objects.get(id= elemento)
-                        respuesta.votosRespuesta +=1
-                        respuesta.save()
+                recaptcha_response = request.POST.get('g-recaptcha-response')
+                url = 'https://www.google.com/recaptcha/api/siteverify'
+                values = {
+                'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+                'response': recaptcha_response
+                }
+                data = urllib.urlencode(values)
+                req = urllib2.Request(url, data)
+                response = urllib2.urlopen(req)
+                result = json.load(response)
+                if result['success']:
+                    encuesta.visitas +=1
+                    encuesta.save()
+                    for pregunta in preguntas:
+                        if pregunta.id == 1:
+                            listado = []
+                            listado.append(int(request.POST.get('pp'+str(pregunta.id))))
+                        else:
+                            listado= request.POST.getlist('pp'+str(pregunta.id))
+                        for elemento in listado:
+                            respuesta= Respuesta.objects.get(id= elemento)
+                            respuesta.votosRespuesta +=1
+                            respuesta.save()
+                else:
+                     messages.error(request, 'reCAPTCHA Invalido, Por favor ingresa de nuevo.')
+                     return redirect('responder', encuesta.id)
 
-            encuesta.visitas +=1
-            encuesta.save()
+            
             return HttpResponseRedirect(reverse('gracias', args=(encuesta.id,)))
 
         else:
