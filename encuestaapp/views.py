@@ -230,7 +230,7 @@ def CreatePregunta(request,encuestaid):
         pregunta.encuesta= encuesta
         pregunta.titulo= request.POST['titulo']
         pregunta.save()
-
+        messages.success(request, 'La Pregunta fue creada') 
     return render_to_response('edit_pregunta.html',{'id':encuesta}, context_instance=RequestContext(request))
 
 
@@ -279,6 +279,7 @@ def CreateRespuesta(request, encuestaid, preguntaid):
         respuesta.pregunta= pregunta
         respuesta.titulo= request.POST['titulo']
         respuesta.save()
+        messages.success(request, 'La Respuesta fue creada') 
 
     return render_to_response('new_respuesta.html', {'pregunta':pregunta, 'encuesta':encuesta}, context_instance=RequestContext(request))
 
