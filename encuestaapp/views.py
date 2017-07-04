@@ -226,11 +226,16 @@ def CreatePregunta(request,encuestaid):
     encuesta= get_object_or_404(Encuesta, pk=encuestaid)
 
     if request.method == 'POST':
-        pregunta=Pregunta()
-        pregunta.encuesta= encuesta
-        pregunta.titulo= request.POST['titulo']
-        pregunta.save()
-        messages.success(request, 'La Pregunta fue creada') 
+        if request.POST['titulo'] == '':
+            messages.error(request, 'Error, debes llenar todos los campos')
+
+        else:
+            pregunta=Pregunta()
+            pregunta.encuesta= encuesta
+            pregunta.titulo= request.POST['titulo']
+            pregunta.save()
+            messages.success(request, 'La Pregunta fue creada') 
+
     return render_to_response('edit_pregunta.html',{'id':encuesta}, context_instance=RequestContext(request))
 
 
@@ -258,10 +263,13 @@ def UpdatePregunta(request, encuestaid, preguntaid ):
     pregunta=get_object_or_404(Pregunta, id =preguntaid)
 
     if request.method == 'POST':
-        pregunta.encuesta= encuesta
-        pregunta.titulo= request.POST['titulo']
-        pregunta.save()
-        return HttpResponseRedirect(reverse('encuesta-view', args=(encuesta.id,)))
+        if request.POST['titulo'] == '':
+            messages.error(request, 'Error, debes llenar todos los campos')
+        else:
+            pregunta.encuesta= encuesta
+            pregunta.titulo= request.POST['titulo']
+            pregunta.save()
+            return HttpResponseRedirect(reverse('encuesta-view', args=(encuesta.id,)))
 
     return render_to_response('editar_pregunta.html',{'encuesta':encuesta, 'pregunta':pregunta}, context_instance=RequestContext(request))
 
@@ -275,11 +283,14 @@ def CreateRespuesta(request, encuestaid, preguntaid):
     pregunta= get_object_or_404(Pregunta, id =preguntaid)
 
     if request.method == 'POST':
-        respuesta=Respuesta()
-        respuesta.pregunta= pregunta
-        respuesta.titulo= request.POST['titulo']
-        respuesta.save()
-        messages.success(request, 'La Respuesta fue creada') 
+        if request.POST['titulo'] == '':
+            messages.error(request, 'Error, debes llenar todos los campos')
+        else:
+            respuesta=Respuesta()
+            respuesta.pregunta= pregunta
+            respuesta.titulo= request.POST['titulo']
+            respuesta.save()
+            messages.success(request, 'La Respuesta fue creada') 
 
     return render_to_response('new_respuesta.html', {'pregunta':pregunta, 'encuesta':encuesta}, context_instance=RequestContext(request))
 
@@ -290,10 +301,15 @@ def UpdateRespuesta(request, encuestaid, preguntaid,respuestaid):
     respuesta= get_object_or_404(Respuesta, id = respuestaid)
 
     if request.method == 'POST':
-        respuesta.pregunta= pregunta
-        respuesta.titulo= request.POST['titulo']
-        respuesta.save()
-        return HttpResponseRedirect(reverse('detalle-pregunta', args=(encuesta.id, pregunta.id)))
+
+        if request.POST['titulo'] == '':
+            messages.error(request, 'Error, debes llenar todos los campos')
+
+        else:
+            respuesta.pregunta= pregunta
+            respuesta.titulo= request.POST['titulo']
+            respuesta.save()
+            return HttpResponseRedirect(reverse('detalle-pregunta', args=(encuesta.id, pregunta.id)))
 
     return render_to_response('edit_respuesta.html', {'pregunta':pregunta, 'encuesta':encuesta, 'respuesta':respuesta}, context_instance=RequestContext(request))
 

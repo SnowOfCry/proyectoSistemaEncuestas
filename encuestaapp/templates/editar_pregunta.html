@@ -6,7 +6,19 @@
 	
   {% block Margen %} 
    
-   <h3>Administacion de Encuestas</h3>
+   {%if messages %}
+       <h3>Administacion de Encuestas</h3>
+      <br>
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+  
+  {%else%}
+    <h3>Administacion de Encuestas</h3>
+
+  {%endif%}
 
   {% endblock %}
 

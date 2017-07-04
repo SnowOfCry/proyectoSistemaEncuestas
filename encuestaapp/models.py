@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
  
 class Encuesta(models.Model):
     nombreEncuesta=models.CharField(max_length=100,null=False)
-    descripcion = models.CharField(max_length=255)
+    descripcion = models.CharField(max_length=255,null=False)
     visitas = models.IntegerField(default=0)
     fechaCreacion=models.DateField(auto_now_add=timezone.now().date())
 
@@ -22,7 +22,7 @@ class Encuesta(models.Model):
 
 class Pregunta(models.Model):
     encuesta=models.ForeignKey(Encuesta,null=False, on_delete=models.CASCADE )
-    titulo= models.CharField(max_length=255)
+    titulo= models.CharField(max_length=255, null=False)
 
     def get_absolute_url(self):
         return reverse('encuestaview',kwargs={'pk':self.encuesta})
